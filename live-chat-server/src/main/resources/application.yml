@@ -1,0 +1,44 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: live-chat-server
+  profiles:
+    default: local
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:live_chat}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:123456}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+  jackson:
+    time-zone: Asia/Shanghai
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com.mtjava.livechat: info
+
+live:
+  cors:
+    allowed-origins: http://localhost:5173,http://127.0.0.1:5173,http://[::1]:5173
+  security:
+    jwt-secret: change-this-secret-key-at-least-32-bytes-long
+    expire-minutes: 1440
+  rate-limit:
+    window-seconds: 3
+    max-messages: 3
+  message:
+    recent-limit: 50

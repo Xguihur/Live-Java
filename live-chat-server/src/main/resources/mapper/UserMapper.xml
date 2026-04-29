@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtjava.livechat.mapper.UserMapper">
+
+    <resultMap id="UserResultMap" type="com.mtjava.livechat.model.User">
+        <id property="id" column="id"/>
+        <result property="nickname" column="nickname"/>
+        <result property="avatar" column="avatar"/>
+        <result property="accountType" column="account_type"/>
+        <result property="status" column="status"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.mtjava.livechat.model.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO live_user (nickname, avatar, account_type, status, created_at, updated_at)
+        VALUES (#{nickname}, #{avatar}, #{accountType}, #{status}, #{createdAt}, #{updatedAt})
+    </insert>
+
+    <select id="findById" resultMap="UserResultMap">
+        SELECT id, nickname, avatar, account_type, status, created_at, updated_at
+        FROM live_user
+        WHERE id = #{id}
+    </select>
+</mapper>

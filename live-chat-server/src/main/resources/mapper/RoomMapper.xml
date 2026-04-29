@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtjava.livechat.mapper.RoomMapper">
+
+    <resultMap id="RoomResultMap" type="com.mtjava.livechat.model.LiveRoom">
+        <id property="id" column="id"/>
+        <result property="roomName" column="room_name"/>
+        <result property="ownerUserId" column="owner_user_id"/>
+        <result property="coverUrl" column="cover_url"/>
+        <result property="roomStatus" column="room_status"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <select id="findActiveRooms" resultMap="RoomResultMap">
+        SELECT id, room_name, owner_user_id, cover_url, room_status, created_at, updated_at
+        FROM live_room
+        WHERE room_status = 'ONLINE'
+        ORDER BY id ASC
+    </select>
+
+    <select id="findById" resultMap="RoomResultMap">
+        SELECT id, room_name, owner_user_id, cover_url, room_status, created_at, updated_at
+        FROM live_room
+        WHERE id = #{id}
+    </select>
+</mapper>
+

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtjava.livechat.mapper.BanMapper">
+
+    <resultMap id="BanResultMap" type="com.mtjava.livechat.model.LiveRoomBan">
+        <id property="id" column="id"/>
+        <result property="roomId" column="room_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="banUntil" column="ban_until"/>
+        <result property="reason" column="reason"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.mtjava.livechat.model.LiveRoomBan" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO live_room_ban (room_id, user_id, ban_until, reason, created_by, created_at)
+        VALUES (#{roomId}, #{userId}, #{banUntil}, #{reason}, #{createdBy}, #{createdAt})
+    </insert>
+
+    <select id="findActiveBan" resultMap="BanResultMap">
+        SELECT id, room_id, user_id, ban_until, reason, created_by, created_at
+        FROM live_room_ban
+        WHERE room_id = #{roomId}
+          AND user_id = #{userId}
+          AND ban_until &gt; #{now}
+        ORDER BY ban_until DESC
+        LIMIT 1
+    </select>
+
+    <delete id="deleteActiveBan">
+        DELETE FROM live_room_ban
+        WHERE room_id = #{roomId}
+          AND user_id = #{userId}
+          AND ban_until &gt; #{now}
+    </delete>
+</mapper>

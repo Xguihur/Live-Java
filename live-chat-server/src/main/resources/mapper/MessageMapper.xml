@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtjava.livechat.mapper.MessageMapper">
+
+    <resultMap id="MessageResultMap" type="com.mtjava.livechat.model.LiveRoomMessage">
+        <id property="id" column="id"/>
+        <result property="roomId" column="room_id"/>
+        <result property="senderId" column="sender_id"/>
+        <result property="senderName" column="sender_name"/>
+        <result property="messageType" column="message_type"/>
+        <result property="content" column="content"/>
+        <result property="status" column="status"/>
+        <result property="sendTime" column="send_time"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.mtjava.livechat.model.LiveRoomMessage" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO live_room_message (
+            room_id,
+            sender_id,
+            sender_name,
+            message_type,
+            content,
+            status,
+            send_time,
+            created_at
+        )
+        VALUES (
+            #{roomId},
+            #{senderId},
+            #{senderName},
+            #{messageType},
+            #{content},
+            #{status},
+            #{sendTime},
+            #{createdAt}
+        )
+    </insert>
+
+    <select id="findRecentByRoomId" resultMap="MessageResultMap">
+        SELECT id, room_id, sender_id, sender_name, message_type, content, status, send_time, created_at
+        FROM live_room_message
+        WHERE room_id = #{roomId}
+        ORDER BY id DESC
+        LIMIT #{limit}
+    </select>
+
+    <select id="findRecentByRoomIdBeforeId" resultMap="MessageResultMap">
+        SELECT id, room_id, sender_id, sender_name, message_type, content, status, send_time, created_at
+        FROM live_room_message
+        WHERE room_id = #{roomId}
+          AND id &lt; #{beforeId}
+        ORDER BY id DESC
+        LIMIT #{limit}
+    </select>
+</mapper>
+
