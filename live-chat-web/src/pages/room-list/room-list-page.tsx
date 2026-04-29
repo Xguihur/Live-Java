@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { PageShell } from "@/components/common/page-shell";
 import { RoomCard } from "@/components/room/room-card";
-import { fetchRoomList } from "@/features/room/api";
+import { fetchRoomList } from "@/services/api/room";
 import { useAuthStore } from "@/stores/auth-store";
 import type { RoomSummary } from "@/types";
 

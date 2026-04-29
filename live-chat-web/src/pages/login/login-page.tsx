@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
-import { login } from "@/features/auth/api";
+import { login } from "@/services/api/auth";
 import { PageShell } from "@/components/common/page-shell";
 import { useAuthStore } from "@/stores/auth-store";
 import type { LoginResponse } from "@/types";

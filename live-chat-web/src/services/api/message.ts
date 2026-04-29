@@ -9,4 +9,3 @@ export async function fetchRoomMessages(roomId: number) {
   });
   return response.data.data;
 }
-

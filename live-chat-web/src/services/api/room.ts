@@ -10,4 +10,3 @@ export async function fetchRoomDetail(roomId: number) {
   const response = await httpClient.get<ApiResponse<RoomDetail>>(`/api/rooms/${roomId}`);
   return response.data.data;
 }
-

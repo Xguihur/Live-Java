@@ -7,4 +7,3 @@ export async function login(nickname: string) {
   });
   return response.data.data;
 }
-
